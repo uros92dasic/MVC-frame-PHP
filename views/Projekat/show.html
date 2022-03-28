@@ -1,0 +1,23 @@
+{% extends "_global/index.html" %}
+
+{% block main %}
+
+<h1>{{ projekat.Ime_proj|title }}</h1>
+<p>Rok: <b>{{ projekat.Rok }}</b></p>
+<p>Radnici koji rade na projektu:</p>
+<ul>
+    {% for radnik in radniksInProjekat %}
+    <li class="radnik"><a href="/radnik/{{ radnik.Id_radnika }}">{{ radnik.Ime }} {{ radnik.Prezime }}</a>
+        <span class="rukovodilac"><a href="/radnik/{{ radnik.Rukovodilac }}">Rukovodilac: {{ radnik.Rukovodilac }} </a></span>
+        <a href="/odeljenje/{{ radnik.Id_odeljenja }}">Odeljenje {{ radnik.Id_odeljenja }}</a>
+    {% endfor %}
+</ul>
+
+<span class="radnici">Broj radnika: <b>{{ radniksInProjekat|length }}</b></span><br>
+<span class="plate">Sredstva: <b>{{ projekat.Sredstva }}</b> &euro;</span>
+
+{% endblock main %}
+
+{% block naslov %}
+{{ radniks.Ime|escape }}
+{% endblock %}

@@ -1,0 +1,155 @@
+use preduzece;
+
+CREATE TABLE ODELJENJE
+( Id_odeljenja SMALLINT NOT NULL PRIMARY KEY,
+  Ime_od NCHAR (20) NOT NULL,
+  Mesto NCHAR (20),
+  Sef_odeljenja INTEGER,
+  CONSTRAINT uk_odeljenje_imeod UNIQUE (Ime_od)
+  );
+
+CREATE TABLE  RADNIK
+(Id_radnika INTEGER NOT NULL PRIMARY KEY,
+  Ime NCHAR (25) NOT NULL,
+  Prezime NCHAR (25) NOT NULL,
+  Posao NCHAR (10),
+  Kvalif NCHAR (3),
+  Rukovodilac INTEGER,
+  Dat_zap DATETIME,
+  Premija FLOAT (1),
+  Plata FLOAT (1) DEFAULT 0, 
+  Id_odeljenja SMALLINT,
+  FOREIGN KEY(Id_odeljenja) REFERENCES ODELJENJE (Id_odeljenja),
+  CHECK (kvalif in ('VKV','KV','VSS'))
+  ); 
+  
+
+  ALTER TABLE ODELJENJE
+  ADD FOREIGN KEY (Sef_odeljenja) REFERENCES RADNIK (Id_radnika);
+
+  CREATE TABLE  PROJEKAT
+( Id_projekta INTEGER PRIMARY KEY,
+  Ime_proj NCHAR (25) NOT NULL UNIQUE,
+  Sredstva FLOAT (2),
+  Rok DATETIME ) ;
+
+  CREATE TABLE  UCESCE
+( Id_radnika INTEGER NOT NULL,
+  Id_projekta INTEGER NOT NULL,
+  Br_sati SMALLINT,
+  Funkcija NCHAR (15),
+  PRIMARY KEY (Id_radnika, Id_projekta),
+  FOREIGN KEY (Id_projekta) REFERENCES PROJEKAT (Id_projekta),
+  FOREIGN KEY (Id_radnika) REFERENCES RADNIK (Id_radnika) ) ;
+
+INSERT INTO ODELJENJE (Id_odeljenja, Ime_od, Mesto) 
+  values (10, N'Komercijala', N'Novi Beograd');
+INSERT INTO ODELJENJE (Id_odeljenja, Ime_od, Mesto)  
+  values (20, N'Plan', N'Dorćol');
+INSERT INTO ODELJENJE (Id_odeljenja, Ime_od, Mesto) 
+  values (30, N'Prodaja', N'Stari Grad');
+INSERT INTO ODELJENJE (Id_odeljenja, Ime_od, Mesto) 
+  values (40, N'Direkcija', N'Banovo Brdo');
+INSERT INTO ODELJENJE (Id_odeljenja, Ime_od, Mesto) 
+  values (50, N'Računski centar', N'Zemun');
+INSERT INTO ODELJENJE (Id_odeljenja, Ime_od, Mesto) 
+  values (60, N'Nabavka', N'Rakovica');
+
+INSERT INTO RADNIK(Id_radnika, Ime, Prezime, Posao, Kvalif, Rukovodilac,
+                   Dat_zap, Premija, Plata, Id_odeljenja) 
+values (5367, N'Petar', N'Vasić',	N'vozač', 'KV', NULL, 
+'1978-01-01', 1900.00, 1300.00,	20),
+(5497, N'Aleksandar', N'Marić', N'električar', 'KV', NULL, 
+  '1990-02-17', 800.0, 1000.0, 10),
+(5519, N'Vanja', N'Kondić', N'prodavac', 'VKV', NULL, 
+  '1991-11-07', 1300.0, 1200.0, 10),
+(5652, N'Jovan', N'Perić', N'električar', 'KV', NULL, 
+  '1980-05-31', 500.0, 1000.0, 10),
+(5662, N'Janko', N'Mančić',	N'upravnik', 'VSS', NULL, 
+  '1993-08-12', NULL, 2400, 10),
+(5696, N'Mirjana', N'Dimić', N'čistač', 'KV', NULL, 
+  '1991-09-30', 0, 1000, 10),
+(5780, N'Božidar', N'Ristić', N'upravnik', 'VSS', NULL, 
+  '1984-08-11', NULL, 2200, 20),
+(5786, N'Pavle', N'Šotra', N'upravnik', 'VSS', NULL, 
+  '1983-05-22', NULL, 2800, 30),
+(5842, N'Miloš', N'Marković', N'direktor', 'VSS', NULL, 
+  '1981-12-15', NULL, 3000,	40),
+(5867, N'Svetlana', N'Grubač', N'savetnik', 'VSS', NULL, 
+  '1970-08-08', NULL, 2750, 40),
+(5874, N'Tomislav', N'Bogovac', N'električar', 'KV', NULL, 
+  '1971-04-19', 1100, 1000, 10),
+(5898, N'Andrija',	N'Ristić', N'nabavljač', 'KV', NULL, 
+  '1980-01-20', 1200, 1100, 30),
+(5900, N'Slobodan', N'Petrović', N'vozač', 'KV', NULL, 
+  '2002-10-03', 1300, 900, 20),
+(5932, N'Mitar', N'Vuković', N'savetnik', 'VSS', NULL, 
+  '2000-03-25', NULL, 2600, 20),
+(5953, N'Jovan', N'Perić', N'nabavljač', 'KV', NULL, 
+  '1979-01-12', 0, 1100, 30),
+(6234, N'Marko', N'Nastić', N'analitičar', 'VSS', NULL, 
+  '1990-12-17', 3000, 1300, 30),
+(6789, N'Janko', N'Simić', N'upravnik', 'VSS', NULL, 
+  '2003-12-23', 10, 3900, 40),
+(7890, N'Ivan', N'Buha', N'analitičar', 'VSS', NULL, 
+  '2003-12-17', 3200, 1600, 20),
+(7892, N'Luka', N'Bošković', N'analitičar', 'VSS', NULL, 
+  '2004-05-20', NULL, 2000, NULL);
+
+update RADNIK set Rukovodilac = 5780 where Id_radnika = 5367;
+update RADNIK set Rukovodilac = 5662 where Id_radnika = 5497;
+update RADNIK set Rukovodilac = 5662 where Id_radnika = 5519;
+update RADNIK set Rukovodilac = 5662 where Id_radnika = 5652;
+update RADNIK set Rukovodilac = 6789 where Id_radnika = 5662;
+update RADNIK set Rukovodilac = 5662 where Id_radnika = 5696;
+update RADNIK set Rukovodilac = 6789 where Id_radnika = 5780;
+update RADNIK set Rukovodilac = 6789 where Id_radnika = 5786;
+update RADNIK set Rukovodilac = 5842 where Id_radnika = 5867;
+update RADNIK set Rukovodilac = 5662 where Id_radnika = 5874;
+update RADNIK set Rukovodilac = 5786 where Id_radnika = 5898;
+update RADNIK set Rukovodilac = 5780 where Id_radnika = 5900;
+update RADNIK set Rukovodilac = 5842 where Id_radnika = 5932;
+update RADNIK set Rukovodilac = 5786 where Id_radnika = 5953;
+update RADNIK set Rukovodilac = 5867 where Id_radnika = 6234;
+update RADNIK set Rukovodilac = 5842 where Id_radnika = 6789;
+update RADNIK set Rukovodilac = 5867 where Id_radnika = 7890;
+update RADNIK set Rukovodilac = 5867 where Id_radnika = 7892;
+
+update ODELJENJE set Sef_odeljenja = 5662 where Id_odeljenja = 10;
+update ODELJENJE set Sef_odeljenja = 5780 where Id_odeljenja = 20;
+update ODELJENJE set Sef_odeljenja = 5786 where Id_odeljenja = 30;
+update ODELJENJE set Sef_odeljenja = 5842 where Id_odeljenja = 40;
+
+insert into PROJEKAT 
+  values(100, N'uvoz', 3000000.00, '2004-05-05');
+insert into PROJEKAT 
+  values(200, N'izvoz', 2000000.00, '2005-08-22');
+insert into PROJEKAT 
+  values(300, N'plasman', 6000000.00, '2004-12-02');
+insert into PROJEKAT 
+  values(400, N'projektovanje', 5000000.00, '2005-04-14');
+insert into PROJEKAT 
+  values(500, N'izgradnja', 0.00, '2005-08-22');
+
+insert into UCESCE values(5497, 400, 2000, N'IZVRŠILAC');
+insert into UCESCE values(5652, 100, 1000, N'IZVRŠILAC');
+insert into UCESCE values(5652, 300, 1000, N'IZVRŠILAC');
+insert into UCESCE values(5662, 300, 2000, N'ŠEF');
+insert into UCESCE values(5696, 200, 2000, N'ŠEF');
+insert into UCESCE values(5696, 300, 2000, N'IZVRŠILAC');
+insert into UCESCE values(5780, 200, 2000, N'ORGANIZATOR');
+insert into UCESCE values(5786, 100, 2000, N'KONSULTANT');
+insert into UCESCE values(5842, 100, 2000, N'ŠEF');
+insert into UCESCE values(5867, 200, 2000, N'KONSULTANT');
+insert into UCESCE values(5898, 200, 2000, N'IZVRŠILAC');
+insert into UCESCE values(5900, 100, 2000, N'IZVRŠILAC');
+insert into UCESCE values(5932, 100, 500, N'KONSULTANT');
+insert into UCESCE values(5932, 200, 1000, N'ORGANIZATOR');
+insert into UCESCE values(5932, 300, 500, N'NADZORNIK');
+insert into UCESCE values(5953, 100, 1000, N'IZVRŠILAC');
+insert into UCESCE values(5953, 300, 1000, N'IZVRŠILAC');
+insert into UCESCE values(6234, 100, 500, N'NADZORNIK');
+insert into UCESCE values(6234, 200, 1200, N'IZVRŠILAC');
+insert into UCESCE values(6234, 300, 300, N'KONSULTANT');
+insert into UCESCE values(6789, 200, 2000, N'IZVRŠILAC');
+insert into UCESCE values(7890, 300, 2000, N'IZVRŠILAC');

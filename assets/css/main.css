@@ -1,0 +1,80 @@
+* {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+}
+body {
+    margin: 0 auto;
+    width: 1100px;
+}
+.site-header {
+    display: grid;
+    grid-template-areas: "banner social" "banner search" "menu menu";
+}
+.banners {grid-area: banner; background-color: chocolate}
+.social-icons {grid-area: social; text-align: right; background-color: aqua}
+.search-box {grid-area: search; text-align: right; background-color: teal}
+
+.social-icons img {
+    height: 16px;
+    width: 16px;
+    margin: 0px 20px;
+}
+
+#main-menu {
+    margin: 20px 0px;
+    grid-area: menu;
+}
+#main-menu > ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: stretch;
+}
+#main-menu > ul > li {
+    text-align: center;
+    flex-grow: 1;
+}
+#main-menu > ul > li:hover {
+    border: 1px solid #000;
+    background: rgba(200, 200, 200, 0.3);
+}
+#main-menu > ul > li > a {
+    text-decoration: none;
+    padding: 10px 0px;
+    display: block;
+    color: black;
+}
+
+.odeljenjes {
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    flex-wrap: wrap;
+}
+.odeljenje {
+    width: 50%;
+    text-align: center;
+    padding: 50px 100px;
+    border: 1px solid #ccc;
+    background: rgba(200, 200, 200, 0.3);
+}
+.odeljenje:hover {border: 1px solid #000; background: rgba(200, 200, 200, 0.5);}
+
+.site-footer {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.radnik {
+    display: grid;
+    grid-template-areas: "radnik datum odeljenje";
+    width: 75%;
+    text-align: center;
+    padding: 25px 50px;
+    border: 1px solid #ccc;
+    background: rgba(200, 200, 200, 0.3);
+}
+.radnik > .dat-zap { grid-area: datum; }
+.radnik > .rukovodilac { grid-area: odeljenje;}

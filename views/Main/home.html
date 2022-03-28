@@ -1,0 +1,15 @@
+{% extends "_global/index.html" %}
+
+{% block main %}
+
+{% apply spaceless %}
+<div class="odeljenjes">
+        {% for odeljenje in odeljenjes %}
+            <a href="/odeljenje/{{ odeljenje.Id_odeljenja }}" class="odeljenje">
+                {{ odeljenje.Ime_od|escape|title }}
+            </a>
+        {% endfor %}
+</div>
+{% endapply %}
+
+{% endblock main %}

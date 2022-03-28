@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <title>Uros&amp;Dasic - {% block naslov %}Pocetna{% endblock %}</title>
+</head>
+<body>
+    <header class="site-header">
+        <div class="banners">
+            <a href="/" class="banner">
+                <img src="/assets/img/banner-1.jpg" alt="Banner 1">
+            </a>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/uros-dasic-a1588b233/"><img src="/assets/img/social/linkedin.png" alt="Li"></a>
+            <a href="https://github.com/uros92dasic"><img src="/assets/img/social/Github.png" alt="Gh"></a>
+            <a href="#"><img src="/assets/img/social/Facebook.png" alt="Fb"></a>
+        </div>
+        <div class="search-box">
+            <form method="post" action="/search">
+                <input type="text" name="q" placeholder="Kljucne reci pretrage">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <nav id="main-menu">
+            <ul>
+                <li><a href="/">Pocetna</a>
+                <li><a href="/odeljenja">Odeljenja</a>
+                <li><a href="/profile">Profil</a>
+                <li><a href="/contact">Kontakt</a>
+                <li><a href="/log-out">Odjava</a>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block main %}
+        {% endblock main %}
+    </main>
+    <footer class="site-footer">
+        <p>Datum i vreme: {{ "now"|date('d. m. Y. H.i.s', timezone="Europe/Belgrade") }}</p>
+        &copy; 2022 Uros Dasic &amp; company
+    </footer>
+</body>
+</html>

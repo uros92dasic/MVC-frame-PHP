@@ -1,0 +1,20 @@
+{% extends "_global/index.html" %}
+
+{% block main %}
+
+<h1>{{ radnik.Ime }} {{ radnik.Prezime }}</h1>
+<p>Posao: <b>{{ radnik.Posao|title }}</b></p>
+<p>Kvalifikacija: <b>{{ radnik.Kvalif }}</b></p>
+<ul>
+    {% for projekat in projekatsInRadnik %}
+    <li class="radnik">
+        <a href="/projekat/{{ projekat.Id_projekta }}">Projekat - {{ projekat.Ime_proj|title }}</a>
+        <a href="/odeljenje/{{ radnik.Id_odeljenja }}">Odeljenje {{ radnik.Id_odeljenja }}</a>
+    {% endfor %}
+</ul>
+
+{% endblock main %}
+
+{% block naslov %}
+{{ radniks.Ime|escape }}
+{% endblock %}

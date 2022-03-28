@@ -1,0 +1,23 @@
+{% extends "_global/index.html" %}
+
+{% block main %}
+
+<h1>{{ odeljenje.Ime_od }}</h1>
+<p>Mesto: <b>{{ odeljenje.Mesto|title }}</b></p>
+<p>Sef odeljenja: <b>{{ sefOdeljenja.Ime }} {{ sefOdeljenja.Prezime }}</b></p>
+<p>Spisak radnika ovog odeljenja je:</p>
+<ul>
+    {% for radnik in radniksInOdeljenje %}
+    <li class="radnik"><a href="/radnik/{{ radnik.Id_radnika }}">{{ radnik.Ime }} {{ radnik.Prezime }}</a>
+        <span class="dat-zap">Datum zaposlenja: {{ radnik.Dat_zap }} </span>
+        <span class="rukovodilac"><a href="/radnik/{{ radnik.Rukovodilac }}">Rukovodilac: {{ radnik.Rukovodilac }} </a></span>
+    {% endfor %}
+</ul>
+<span class="radnici">Broj radnika: <b>{{ radniksInOdeljenje|length }}</b></span><br>
+<span class="plate">Max plata u odeljenju: <b>{{ maxPlata }}</b> &euro;</span>
+
+{% endblock main %}
+
+{% block naslov %}
+{{ odeljenjes.Ime_od|escape }}
+{% endblock %}
